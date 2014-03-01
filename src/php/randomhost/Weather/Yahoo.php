@@ -185,7 +185,7 @@ class Yahoo
      *  'sunset'  => 'h:mm am/pm'  // today's sunset time
      * )</pre>
      *
-     * @return \ArrayObject
+     * @return array
      */
     public function getAstronomy()
     {
