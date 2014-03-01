@@ -7,7 +7,7 @@
  * PHP version 5
  *
  * @category  Weather
- * @package   PHP-Weather
+ * @package   PHP_Weather
  * @author    Ch'Ih-Yu <chi-yu@web.de>
  * @copyright 2014 random-host.com
  * @license   http://www.debian.org/misc/bsd.license  BSD License (3 Clause)
@@ -23,7 +23,7 @@ namespace randomhost\Weather;
  * randomhost\Image\WebcamOverlay class.
  *
  * @category  Weather
- * @package   PHP-Weather
+ * @package   PHP_Weather
  * @author    Ch'Ih-Yu <chi-yu@web.de>
  * @copyright 2014 random-host.com
  * @license   http://www.debian.org/misc/bsd.license  BSD License (3 Clause)

@@ -16,10 +16,10 @@
     <description>
         This package encapsulates SimpleXML functions for easy retrieval of
         weather data from the Yahoo Weather API. It was created as part of the
-        PHP-Webcam-Overlay package but is released as a separate component so it
+        PHP_Webcam_Overlay package but is released as a separate component so it
         can be used in other packages.
 
-        Because it was created as a dependency of the PHP-Webcam-Overlay package,
+        Because it was created as a dependency of the PHP_Webcam_Overlay package,
         it does only support a subset of the available weather data.
     </description>
     <lead>
