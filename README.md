@@ -1,35 +1,35 @@
-PHP-Weather
+PHP_Weather
 ===========
 
 This package encapsulates SimpleXML functions for easy retrieval of weather data
 from the [Yahoo Weather API](http://developer.yahoo.com/weather/). It
-was created as part of the PHP-Webcam-Overlay package but is released as a
+was created as part of the PHP_Webcam_Overlay package but is released as a
 separate component so it can be used in other packages.
 
-Because it was created as a dependency of the PHP-Webcam-Overlay package, it
+Because it was created as a dependency of the PHP_Webcam_Overlay package, it
 does only support a subset of the available weather data.
 
 System-Wide Installation
 ------------------------
 
-PHP-Weather should be installed using the [PEAR Installer](http://pear.php.net).
+PHP_Weather should be installed using the [PEAR Installer](http://pear.php.net).
 This installer is the PHP community's de-facto standard for installing PHP
 components.
 
     sudo pear channel-discover pear.random-host.com
-    sudo pear install --alldeps randomhost/PHP-Weather
+    sudo pear install --alldeps randomhost/PHP_Weather
 
 As A Dependency On Your Component
 ---------------------------------
 
-If you are creating a component that relies on PHP-Weather, please make sure that
-you add PHP-Weather to your component's package.xml file:
+If you are creating a component that relies on PHP_Weather, please make sure that
+you add PHP_Weather to your component's package.xml file:
 
 ```xml
 <dependencies>
   <required>
     <package>
-      <name>PHP-Weather</name>
+      <name>PHP_Weather</name>
       <channel>pear.random-host.com</channel>
       <min>1.0.0</min>
       <max>1.999.9999</max>
@@ -41,7 +41,7 @@ you add PHP-Weather to your component's package.xml file:
 Usage
 -----
 
-The best documentation for PHP-Weather are the unit tests, which are shipped in
+The best documentation for PHP_Weather are the unit tests, which are shipped in
 the package. You will find them installed into your PEAR repository, which on
 Linux systems is normally /usr/share/php/test.
 
@@ -60,8 +60,8 @@ phix4componentdev:
 
 You can then clone the git repository:
 
-    # PHP-Webcam-Overlay
-    git clone https://github.com/Chi-Yu/PHP-Weather.git
+    # PHP_Webcam_Overlay
+    git clone https://github.com/Chi-Yu/PHP_Weather.git
 
 Then, install a local copy of this component's dependencies to complete the
 development environment:
