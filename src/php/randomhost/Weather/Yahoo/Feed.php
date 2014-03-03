@@ -193,7 +193,7 @@ class Feed
         // turn namespace data into objects
         $this->location = $this->createObjectFromData('location');
         $this->units = $this->createObjectFromData('units');
-        //$this->wind = $this->createObjectFromData('wind');
+        $this->wind = $this->createObjectFromData('wind');
         //$this->atmosphere = $this->createObjectFromData('atmosphere');
         $this->astronomy = $this->createObjectFromData('astronomy');
         //$this->condition = $this->createObjectFromData('condition', 'item');

@@ -136,6 +136,4 @@ class Location
 
         return $this;
     }
-
-
 }
