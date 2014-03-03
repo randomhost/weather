@@ -141,54 +141,40 @@ class Feed
     protected $condition = null;
 
     /**
-     * Constructor
+     * Constructor.
      *
-     * @param int    $locationId    (optional) Location ID.
-     * @param string $systemOfUnits (optional) One of the self::UNITS_* constants.
+     * If a $locationId is given, $this::fetchData() will be called implicitly.
+     * Else, it must be called manually after setting a location ID using
+     * $this::setLocationId();
+     *
+     * @param int    $locationId    Optional: Location ID.
+     * @param string $systemOfUnits Optional: One of the self::UNITS_* constants.
      */
     public function __construct($locationId = 0, $systemOfUnits = '')
     {
-        if (0 !== $locationId) {
-            $this->setLocationId($locationId);
-        }
         if ('' !== $systemOfUnits) {
             $this->setSystemOfUnits($systemOfUnits);
+        }
+
+        if (0 !== $locationId) {
+            $this->setLocationId($locationId);
+            $this->fetchData();
         }
     }
 
     /**
      * Fetches weather data from the Yahoo Weather API and sets class properties.
      *
-     * @return void
+     * @return $this
      *
      * @throws \RuntimeException
      */
     public function fetchData()
     {
-        if (0 === $this->locationId) {
-            throw new \RuntimeException('No location ID was given');
-        }
-
-        // load xml file
-        $feedUrl = sprintf(
-            self::WEATHER_API_URL,
-            $this->locationId,
-            $this->systemOfUnits
-        );
-        $xml = @simplexml_load_file($feedUrl);
-        if (!$xml) {
-            throw new \RuntimeException(
-                sprintf('Couldn\'t fetch feed from %s', $feedUrl)
-            );
-        }
+        $this->xml = $this->loadFeed();
 
         // register Yahoo! weather namespace
-        $xml->registerXpathNamespace(
-            self::WEATHER_API_XPATH_NAMESPACE_PREFIX,
-            self::WEATHER_API_XPATH_NAMESPACE
-        );
-
-        $this->xml = $xml;
+        $this->registerXpathNamespace();
 
         // turn namespace data into objects
         $this->location = $this->createObjectFromData('location');
@@ -196,7 +182,9 @@ class Feed
         $this->wind = $this->createObjectFromData('wind');
         $this->atmosphere = $this->createObjectFromData('atmosphere');
         $this->astronomy = $this->createObjectFromData('astronomy');
-        //$this->condition = $this->createObjectFromData('condition', 'item');
+        $this->condition = $this->createObjectFromData('condition', 'item');
+
+        return $this;
     }
 
     /**
@@ -209,6 +197,7 @@ class Feed
     public function setLocationId($id)
     {
         $this->locationId = (int)$id;
+
         return $this;
     }
 
@@ -251,69 +240,8 @@ class Feed
         return $this->systemOfUnits;
     }
 
-
     /**
-     * Returns forecast information about current astronomical conditions.
-     *
-     * Format:
-     * <pre>array(
-     *  'sunrise' => 'h:mm am/pm', // today's sunrise time
-     *  'sunset'  => 'h:mm am/pm'  // today's sunset time
-     * )</pre>
-     *
-     * @return Data\Astronomy
-     */
-    public function getAstronomy()
-    {
-        return $this->astronomy;
-    }
-
-    /**
-     * Returns forecast information about current atmospheric pressure, humidity,
-     * and visibility.
-     *
-     * Format:
-     * <pre>array(
-     *  'humidity'    => 95,    // humidity, in percent
-     *  'visibility'  => 47.47, // visibility
-     *  'pressure'    => 52,    // barometric pressure
-     *  'rising'      => 0      // pressure: steady (0), rising (1), or falling (2)
-     * )</pre>
-     *
-     * @return Data\Atmosphere
-     */
-    public function getAtmosphere()
-    {
-        return $this->atmosphere;
-    }
-
-    /**
-     * Returns the current weather conditions.
-     *
-     * Format:
-     * <pre>array(
-     *  'text'  => 'Partly Cloudy',              // textual description of conditions
-     *  'code'  => 30,                           // condition code for this forecast
-     *  'temp'  => 5,                            // current temperature
-     *  'date'  => 'Sat, 1 Mar 2014 0:17 am CET' // date and time for this forecast
-     * )</pre>
-     *
-     * @return Data\Condition
-     */
-    public function getCondition()
-    {
-        return $this->condition;
-    }
-
-    /**
-     * Returns the location of this forecast.
-     *
-     * Format:
-     * <pre>array(
-     *  'city'    => 'Cologne', // city name
-     *  'region'  => 'NRW',     // state, territory, or region, if given
-     *  'country' => 'DE'       // two-character country code
-     * )</pre>
+     * Returns a Data\Location object holding the location of this forecast.
      *
      * @return Data\Location
      */
@@ -323,15 +251,7 @@ class Feed
     }
 
     /**
-     * Returns the units for various aspects of the forecast.
-     *
-     * Format:
-     * <pre>array(
-     *  'temperature' => 'c',  // f = Fahrenheit, c = Celsius
-     *  'distance'    => 'km', // mi = miles, km = kilometers
-     *  'pressure'    => 'mb', // in = pounds per square inch, mb = millibars
-     *  'speed'       => 'kph' // mph = miles per hour, kph = kilometers per hour
-     * )</pre>
+     * Returns a Data\Units object holding units for various aspects of the forecast.
      *
      * @return Data\Units
      */
@@ -341,21 +261,98 @@ class Feed
     }
 
     /**
-     * Returns forecast information about wind.
-     *
-     * Format:
-     * <pre>array(
-     *  'temperature' => 'c',  // f = Fahrenheit, c = Celsius
-     *  'distance'    => 'km', // mi = miles, km = kilometers
-     *  'pressure'    => 'mb', // in = pounds per square inch, mb = millibars
-     *  'speed'       => 'kph' // mph = miles per hour, kph = kilometers per hour
-     * )</pre>
+     * Returns a Data\Wind object holding forecast information about wind.
      *
      * @return Data\Wind
      */
     public function getWind()
     {
         return $this->wind;
+    }
+
+    /**
+     * Returns a Data\Atmosphere object holding forecast information about
+     * current atmospheric pressure, humidity, and visibility.
+     *
+     * @return Data\Atmosphere
+     */
+    public function getAtmosphere()
+    {
+        return $this->atmosphere;
+    }
+
+    /**
+     * Returns a Data\Astronomy object holding forecast information about
+     * current astronomical conditions.
+     *
+     * @return Data\Astronomy
+     */
+    public function getAstronomy()
+    {
+        return $this->astronomy;
+    }
+
+    /**
+     * Returns a Data\Condition object holding the current weather conditions.
+     *
+     * @return Data\Condition
+     */
+    public function getCondition()
+    {
+        return $this->condition;
+    }
+
+    /**
+     * Retrieves the XML from the Yahoo Weather API.
+     *
+     * @return \SimpleXMLElement
+     * @throws \RuntimeException Thrown in case no location ID was set or the
+     *                           feed could not be loaded.
+     */
+    protected function loadFeed()
+    {
+        if (0 === $this->locationId) {
+            throw new \RuntimeException('No location ID was given');
+        }
+
+        $feedUrl = sprintf(
+            self::WEATHER_API_URL,
+            $this->locationId,
+            $this->systemOfUnits
+        );
+
+        $xml = @simplexml_load_file($feedUrl);
+        if (!$xml) {
+            throw new \RuntimeException(
+                sprintf('Couldn\'t fetch feed from %s', $feedUrl)
+            );
+        }
+
+        return $xml;
+    }
+
+    /**
+     * Creates a prefix/ns context for the next XPath query.
+     *
+     * @return void
+     *
+     * @throws \RuntimeException Thrown in case the namespace couldn't be registered.
+     */
+    protected function registerXpathNamespace()
+    {
+        $nsResult = $this->xml->registerXpathNamespace(
+            self::WEATHER_API_XPATH_NAMESPACE_PREFIX,
+            self::WEATHER_API_XPATH_NAMESPACE
+        );
+        if (!$nsResult) {
+            throw new \RuntimeException(
+                sprintf(
+                    'Couldn\'t register namespace %s using $s',
+                    self::WEATHER_API_XPATH_NAMESPACE_PREFIX,
+                    self::WEATHER_API_XPATH_NAMESPACE
+                )
+            );
+        }
     }
 
     /**
