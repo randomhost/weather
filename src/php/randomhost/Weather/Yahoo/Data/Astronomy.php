@@ -13,7 +13,7 @@
  * @license   http://www.debian.org/misc/bsd.license  BSD License (3 Clause)
  * @link      https://pear.random-host.com/
  */
-namespace randomhost\Weather\Yahoo;
+namespace randomhost\Weather\Yahoo\Data;
 
 /**
  * Represents forecast information about current astronomical conditions
@@ -50,22 +50,8 @@ class Astronomy
      */
     public function __construct($sunrise, $sunset)
     {
-        $this->sunrise = $this->setSunrise($sunrise);
-        $this->sunset = $this->setSunset($sunset);
-    }
-
-    /**
-     * Sets today's sunrise time.
-     *
-     * @param string $sunrise Today's sunrise time in a format known to \DateTime.
-     *
-     * @return $this
-     */
-    public function setSunrise($sunrise)
-    {
-        $this->sunrise = new \DateTime($sunrise);
-
-        return $this;
+        $this->setSunrise($sunrise);
+        $this->setSunset($sunset);
     }
 
     /**
@@ -79,20 +65,6 @@ class Astronomy
     }
 
     /**
-     * Sets today's sunset time.
-     *
-     * @param string $sunset Today's sunset time in a format known to \DateTime.
-     *
-     * @return $this
-     */
-    public function setSunset($sunset)
-    {
-        $this->sunset = new \DateTime($sunset);
-
-        return $this;
-    }
-
-    /**
      * Returns today's sunset time.
      *
      * @return \DateTime
@@ -102,5 +74,31 @@ class Astronomy
         return $this->sunset;
     }
 
+    /**
+     * Sets today's sunrise time.
+     *
+     * @param string $sunrise Today's sunrise time in a format known to \DateTime.
+     *
+     * @return $this
+     */
+    protected function setSunrise($sunrise)
+    {
+        $this->sunrise = new \DateTime($sunrise);
 
+        return $this;
+    }
+
+    /**
+     * Sets today's sunset time.
+     *
+     * @param string $sunset Today's sunset time in a format known to \DateTime.
+     *
+     * @return $this
+     */
+    protected function setSunset($sunset)
+    {
+        $this->sunset = new \DateTime($sunset);
+
+        return $this;
+    }
 } 

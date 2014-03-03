@@ -37,7 +37,7 @@ class Feed
      *
      * @var string
      */
-    const WEATHER_API_URL = 'http://weather.yahooapis.com/forecastrss?w=%1$u&u=%s$s';
+    const WEATHER_API_URL = 'http://weather.yahooapis.com/forecastrss?w=%1$u&u=%2$s';
 
     /**
      * Yahoo Weather API Xpath namespace prefix
@@ -101,42 +101,42 @@ class Feed
     /**
      * Location object instance
      *
-     * @var Location|null
+     * @var Data\Location|null
      */
     protected $location = null;
 
     /**
      * Units object instance
      *
-     * @var Units|null
+     * @var Data\Units|null
      */
     protected $units = null;
 
     /**
      * Wind object instance
      *
-     * @var Wind|null
+     * @var Data\Wind|null
      */
     protected $wind = null;
 
     /**
      * Atmosphere object instance
      *
-     * @var Atmosphere|null
+     * @var Data\Atmosphere|null
      */
     protected $atmosphere = null;
 
     /**
      * Astronomy object instance
      *
-     * @var Astronomy|null
+     * @var Data\Astronomy|null
      */
     protected $astronomy = null;
 
     /**
      * Condition object instance
      *
-     * @var array
+     * @var Data\Condition|null
      */
     protected $condition = null;
 
@@ -152,7 +152,7 @@ class Feed
             $this->setLocationId($locationId);
         }
         if ('' !== $systemOfUnits) {
-
+            $this->setSystemOfUnits($systemOfUnits);
         }
     }
 
@@ -175,6 +175,7 @@ class Feed
             $this->locationId,
             $this->systemOfUnits
         );
+        var_dump($feedUrl);
         $xml = @simplexml_load_file($feedUrl);
         if (!$xml) {
             throw new \RuntimeException(
@@ -192,7 +193,7 @@ class Feed
 
         // turn namespace data into objects
         $this->location = $this->createObjectFromData('location');
-        //$this->units = $this->createObjectFromData('units');
+        $this->units = $this->createObjectFromData('units');
         //$this->wind = $this->createObjectFromData('wind');
         //$this->atmosphere = $this->createObjectFromData('atmosphere');
         $this->astronomy = $this->createObjectFromData('astronomy');
@@ -261,7 +262,7 @@ class Feed
      *  'sunset'  => 'h:mm am/pm'  // today's sunset time
      * )</pre>
      *
-     * @return Astronomy
+     * @return Data\Astronomy
      */
     public function getAstronomy()
     {
@@ -280,7 +281,7 @@ class Feed
      *  'rising'      => 0      // pressure: steady (0), rising (1), or falling (2)
      * )</pre>
      *
-     * @return array
+     * @return Data\Atmosphere
      */
     public function getAtmosphere()
     {
@@ -298,7 +299,7 @@ class Feed
      *  'date'  => 'Sat, 1 Mar 2014 0:17 am CET' // date and time for this forecast
      * )</pre>
      *
-     * @return array
+     * @return Data\Condition
      */
     public function getCondition()
     {
@@ -315,7 +316,7 @@ class Feed
      *  'country' => 'DE'       // two-character country code
      * )</pre>
      *
-     * @return array
+     * @return Data\Location
      */
     public function getLocation()
     {
@@ -333,7 +334,7 @@ class Feed
      *  'speed'       => 'kph' // mph = miles per hour, kph = kilometers per hour
      * )</pre>
      *
-     * @return array
+     * @return Data\Units
      */
     public function getUnits()
     {
@@ -351,7 +352,7 @@ class Feed
      *  'speed'       => 'kph' // mph = miles per hour, kph = kilometers per hour
      * )</pre>
      *
-     * @return array
+     * @return Data\Wind
      */
     public function getWind()
     {
@@ -407,7 +408,9 @@ class Feed
     protected function createObjectFromData($key, $subPath = '')
     {
         $data = $this->getDataFromNamespace($key, $subPath);
-        $class = new \ReflectionClass(__NAMESPACE__ . '\\' . ucfirst($key));
+        $class = new \ReflectionClass(
+            __NAMESPACE__ . '\\Data\\' . ucfirst($key)
+        );
         return $class->newInstanceArgs($data);
     }
 } 
