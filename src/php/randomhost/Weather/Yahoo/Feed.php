@@ -175,7 +175,6 @@ class Feed
             $this->locationId,
             $this->systemOfUnits
         );
-        var_dump($feedUrl);
         $xml = @simplexml_load_file($feedUrl);
         if (!$xml) {
             throw new \RuntimeException(
