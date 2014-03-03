@@ -41,9 +41,33 @@ you add PHP_Weather to your component's package.xml file:
 Usage
 -----
 
-The best documentation for PHP_Weather are the unit tests, which are shipped in
-the package. You will find them installed into your PEAR repository, which on
-Linux systems is normally /usr/share/php/test.
+A basic approach at using this package could look like this:
+
+```php
+<?php
+namespace randomhost\Weather;
+
+require 'psr0.autoloader.php';
+
+// get Yahoo Weather API Feed instance
+$feed = new Yahoo\Feed(667931, Yahoo\Feed::UNITS_INTL);
+
+echo sprintf(
+    'Temperature: %s°%s, Humidity: %s%%',
+    $feed->getCondition()->getTemperature(),
+    $feed->getUnits()->getTemperature(),
+    $feed->getAtmosphere()->getHumidity()
+);
+```
+
+This will instantiate the class, fetch the weather data and display current
+temperature and humidity.
+
+Assuming that you named this file `weather.php`, you should now be able to
+access the weather data at `http://example.com/weather.php`
+
+A more detailed example can be found in `src/www/weather/index.php` which will
+also be installed to your PEAR www directory (usually `/usr/share/php/htdocs`).
 
 Development Environment
 -----------------------
