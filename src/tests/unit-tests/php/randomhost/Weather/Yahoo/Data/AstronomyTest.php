@@ -28,14 +28,6 @@ namespace randomhost\Weather\Yahoo\Data;
  */
 class AstronomyTest extends \PHPUnit_Framework_TestCase
 {
-
-    /**
-     * Unit under test
-     *
-     * @var Astronomy
-     */
-    protected $astronomy;
-
     /**
      * Tests Astronomy::setSunrise() and Astronomy::getSunrise()
      *
