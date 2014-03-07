@@ -144,8 +144,9 @@ class Feed
      * @param string $systemOfUnits Optional: One of the self::UNITS_* constants.
      * @param string $feedUrl       Optional: alternative feed URL
      */
-    public function __construct($locationId = 0, $systemOfUnits = '', $feedUrl = '')
-    {
+    public function __construct(
+        $locationId = 0, $systemOfUnits = '', $feedUrl = ''
+    ) {
         if ('' !== $systemOfUnits) {
             $this->setSystemOfUnits($systemOfUnits);
         }
@@ -374,7 +375,7 @@ class Feed
                 $key
             )
         );
-        if (!is_array($result) ) {
+        if (!is_array($result)) {
             throw new \InvalidArgumentException(
                 sprintf(
                     'Namespace "%s" not found',
