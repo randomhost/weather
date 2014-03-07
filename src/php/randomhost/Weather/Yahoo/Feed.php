@@ -33,25 +33,11 @@ namespace randomhost\Weather\Yahoo;
 class Feed
 {
     /**
-     * Yahoo Weather API feed URL
-     *
-     * @var string
-     */
-    const WEATHER_API_URL = 'http://weather.yahooapis.com/forecastrss?w=%1$u&u=%2$s';
-
-    /**
      * Yahoo Weather API Xpath namespace prefix
      *
      * @var string
      */
-    const WEATHER_API_XPATH_NAMESPACE_PREFIX = 'yweather';
-
-    /**
-     * Yahoo Weather API Xpath namespace
-     *
-     * @var string
-     */
-    const WEATHER_API_XPATH_NAMESPACE = 'http://xml.weather.yahoo.com/ns/rss/1.0';
+    const XPATH_NAMESPACE_PREFIX = 'yweather';
 
     /**
      * Triggers usage of international units
@@ -76,6 +62,13 @@ class Feed
      * @var string
      */
     const UNITS_US = 'f';
+
+    /**
+     * Weather API feed URL
+     *
+     * @var string
+     */
+    protected $feedUrl = 'http://weather.yahooapis.com/forecastrss?w=%1$u&u=%2$s';
 
     /**
      * Location ID for retrieving weather data from Yahoo Weather API
@@ -149,11 +142,16 @@ class Feed
      *
      * @param int    $locationId    Optional: Location ID.
      * @param string $systemOfUnits Optional: One of the self::UNITS_* constants.
+     * @param string $feedUrl       Optional: alternative feed URL
      */
-    public function __construct($locationId = 0, $systemOfUnits = '')
+    public function __construct($locationId = 0, $systemOfUnits = '', $feedUrl = '')
     {
         if ('' !== $systemOfUnits) {
             $this->setSystemOfUnits($systemOfUnits);
+        }
+
+        if ('' !== $feedUrl) {
+            $this->setFeedUrl($feedUrl);
         }
 
         if (0 !== $locationId) {
@@ -167,28 +165,53 @@ class Feed
      *
      * @return $this
      *
-     * @throws \RuntimeException
+     * @throws \RuntimeException Thrown in case data could not be retrieved.
      */
     public function fetchData()
     {
         $this->xml = $this->loadFeed();
 
-        // register Yahoo! weather namespace
-        $this->registerXpathNamespace();
-
         // turn namespace data into objects
-        $this->location = $this->createObjectFromData('location');
-        $this->units = $this->createObjectFromData('units');
-        $this->wind = $this->createObjectFromData('wind');
-        $this->atmosphere = $this->createObjectFromData('atmosphere');
-        $this->astronomy = $this->createObjectFromData('astronomy');
-        $this->condition = $this->createObjectFromData('condition', 'item');
+        try {
+            $this->location = $this->createObjectFromData('location');
+            $this->units = $this->createObjectFromData('units');
+            $this->wind = $this->createObjectFromData('wind');
+            $this->atmosphere = $this->createObjectFromData('atmosphere');
+            $this->astronomy = $this->createObjectFromData('astronomy');
+            $this->condition = $this->createObjectFromData('condition', 'item');
+        } catch (\Exception $e) {
+            throw new \RuntimeException($e->getMessage(), $e->getCode(), $e);
+        }
 
         return $this;
     }
 
     /**
-     * Set location ID for retrieving weather data from Yahoo Weather API.
+     * Sets the feed URL for retrieving weather data from Yahoo Weather API.
+     *
+     * @param string $feedUrl Weather API feed URL
+     *
+     * @return $this
+     */
+    public function setFeedUrl($feedUrl)
+    {
+        $this->feedUrl = $feedUrl;
+
+        return $this;
+    }
+
+    /**
+     * Returns the last set weather API feed URL.
+     *
+     * @return string
+     */
+    public function getFeedUrl()
+    {
+        return $this->feedUrl;
+    }
+
+    /**
+     * Sets the location ID for retrieving weather data from Yahoo Weather API.
      *
      * @param int $id location ID for retrieving weather data from Yahoo Weather API
      *
@@ -316,7 +339,7 @@ class Feed
         }
 
         $feedUrl = sprintf(
-            self::WEATHER_API_URL,
+            $this->feedUrl,
             $this->locationId,
             $this->systemOfUnits
         );
@@ -332,30 +355,6 @@ class Feed
     }
 
     /**
-     * Creates a prefix/ns context for the next XPath query.
-     *
-     * @return void
-     *
-     * @throws \RuntimeException Thrown in case the namespace couldn't be registered.
-     */
-    protected function registerXpathNamespace()
-    {
-        $nsResult = $this->xml->registerXpathNamespace(
-            self::WEATHER_API_XPATH_NAMESPACE_PREFIX,
-            self::WEATHER_API_XPATH_NAMESPACE
-        );
-        if (!$nsResult) {
-            throw new \RuntimeException(
-                sprintf(
-                    'Couldn\'t register namespace %s using $s',
-                    self::WEATHER_API_XPATH_NAMESPACE_PREFIX,
-                    self::WEATHER_API_XPATH_NAMESPACE
-                )
-            );
-        }
-    }
-
-    /**
      * Returns the requested data element from the Yahoo weather namespace.
      *
      * @param string $key     Key of the data to be retrieved.
@@ -367,25 +366,32 @@ class Feed
      */
     protected function getDataFromNamespace($key, $subPath = '')
     {
-        $result = $this->xml->xpath(
+        $result = @$this->xml->xpath(
             sprintf(
                 '//channel/%s%s:%s',
                 !empty($subPath) ? $subPath . '/' : '',
-                self::WEATHER_API_XPATH_NAMESPACE_PREFIX,
+                self::XPATH_NAMESPACE_PREFIX,
                 $key
             )
         );
-        if (!is_array($result)) {
+        if (!is_array($result) ) {
             throw new \InvalidArgumentException(
                 sprintf(
-                    'Element %s not found in namespace %s',
-                    $key,
-                    self::WEATHER_API_XPATH_NAMESPACE_PREFIX
+                    'Namespace "%s" not found',
+                    self::XPATH_NAMESPACE_PREFIX
                 )
             );
         }
         $xml = array_pop($result);
-
+        if (!$xml instanceof \SimpleXMLElement) {
+            throw new \InvalidArgumentException(
+                sprintf(
+                    'Element "%s" not found in namespace "%s"',
+                    $key,
+                    self::XPATH_NAMESPACE_PREFIX
+                )
+            );
+        }
         return current($xml->attributes());
     }
 
