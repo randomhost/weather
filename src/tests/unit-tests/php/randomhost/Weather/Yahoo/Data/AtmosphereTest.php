@@ -16,7 +16,7 @@
 namespace randomhost\Weather\Yahoo\Data;
 
 /**
- * Unit test for AtmosphereTest
+ * Unit test for Atmosphere
  *
  * @category  Weather
  * @package   PHP_Weather
@@ -70,7 +70,6 @@ class AtmosphereTest extends \PHPUnit_Framework_TestCase
 
         $this->assertInternalType('float', $result);
         $this->assertEquals($humidity, $result);
-
     }
 
     /**
@@ -99,7 +98,6 @@ class AtmosphereTest extends \PHPUnit_Framework_TestCase
 
         $this->assertInternalType('float', $result);
         $this->assertEquals($visibility, $result);
-
     }
 
     /**
@@ -128,7 +126,6 @@ class AtmosphereTest extends \PHPUnit_Framework_TestCase
 
         $this->assertInternalType('float', $result);
         $this->assertEquals($pressure, $result);
-
     }
 
     /**
@@ -157,6 +154,5 @@ class AtmosphereTest extends \PHPUnit_Framework_TestCase
 
         $this->assertInternalType('int', $result);
         $this->assertEquals($rising, $result);
-
     }
 }

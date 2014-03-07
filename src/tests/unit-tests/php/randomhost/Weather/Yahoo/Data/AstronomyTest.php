@@ -16,7 +16,7 @@
 namespace randomhost\Weather\Yahoo\Data;
 
 /**
- * Unit test for AstronomyTest
+ * Unit test for Astronomy
  *
  * @category  Weather
  * @package   PHP_Weather
@@ -39,10 +39,10 @@ class AstronomyTest extends \PHPUnit_Framework_TestCase
         $sunset = '6:17 pm';
         $astronomy = new Astronomy($sunrise, $sunset);
 
-        $resultSunrise = $astronomy->getSunrise();
+        $result = $astronomy->getSunrise();
 
-        $this->assertInstanceOf('\DateTime', $resultSunrise);
-        $this->assertEquals($sunrise, $resultSunrise->format('g:i a'));
+        $this->assertInstanceOf('\DateTime', $result);
+        $this->assertEquals($sunrise, $result->format('g:i a'));
     }
 
     /**
@@ -56,9 +56,9 @@ class AstronomyTest extends \PHPUnit_Framework_TestCase
         $sunset = '6:17 pm';
         $astronomy = new Astronomy($sunrise, $sunset);
 
-        $resultSunset = $astronomy->getSunset();
+        $result = $astronomy->getSunset();
 
-        $this->assertInstanceOf('\DateTime', $resultSunset);
-        $this->assertEquals($sunset, $resultSunset->format('g:i a'));
+        $this->assertInstanceOf('\DateTime', $result);
+        $this->assertEquals($sunset, $result->format('g:i a'));
     }
 }
