@@ -314,6 +314,7 @@ class FeedTest extends \PHPUnit_Framework_TestCase
         $this->assertNull($feed->getLocation());
 
         $feed->setLocationId(667931);
+        $feed->setFeedUrl($this->getTestFeedPath(self::TEST_FEED_VALID));
         $feed->fetchData();
         $this->assertInstanceOf(
             __NAMESPACE__ . '\Data\Location',
@@ -334,6 +335,7 @@ class FeedTest extends \PHPUnit_Framework_TestCase
         $this->assertNull($feed->getUnits());
 
         $feed->setLocationId(667931);
+        $feed->setFeedUrl($this->getTestFeedPath(self::TEST_FEED_VALID));
         $feed->fetchData();
         $this->assertInstanceOf(
             __NAMESPACE__ . '\Data\Units',
@@ -354,6 +356,7 @@ class FeedTest extends \PHPUnit_Framework_TestCase
         $this->assertNull($feed->getWind());
 
         $feed->setLocationId(667931);
+        $feed->setFeedUrl($this->getTestFeedPath(self::TEST_FEED_VALID));
         $feed->fetchData();
         $this->assertInstanceOf(
             __NAMESPACE__ . '\Data\Wind',
@@ -374,6 +377,7 @@ class FeedTest extends \PHPUnit_Framework_TestCase
         $this->assertNull($feed->getAtmosphere());
 
         $feed->setLocationId(667931);
+        $feed->setFeedUrl($this->getTestFeedPath(self::TEST_FEED_VALID));
         $feed->fetchData();
         $this->assertInstanceOf(
             __NAMESPACE__ . '\Data\Atmosphere',
@@ -394,6 +398,7 @@ class FeedTest extends \PHPUnit_Framework_TestCase
         $this->assertNull($feed->getAstronomy());
 
         $feed->setLocationId(667931);
+        $feed->setFeedUrl($this->getTestFeedPath(self::TEST_FEED_VALID));
         $feed->fetchData();
         $this->assertInstanceOf(
             __NAMESPACE__ . '\Data\Astronomy',
@@ -414,6 +419,7 @@ class FeedTest extends \PHPUnit_Framework_TestCase
         $this->assertNull($feed->getCondition());
 
         $feed->setLocationId(667931);
+        $feed->setFeedUrl($this->getTestFeedPath(self::TEST_FEED_VALID));
         $feed->fetchData();
         $this->assertInstanceOf(
             __NAMESPACE__ . '\Data\Condition',
