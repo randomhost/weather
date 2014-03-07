@@ -64,9 +64,9 @@ class UnitsTest extends \PHPUnit_Framework_TestCase
      */
     public function testSetGetTemperature($temperature, $distance, $pressure, $speed)
     {
-        $condition = new Units($temperature, $distance, $pressure, $speed);
+        $units = new Units($temperature, $distance, $pressure, $speed);
 
-        $result = $condition->getTemperature();
+        $result = $units->getTemperature();
 
         $this->assertInternalType('string', $result);
         $this->assertEquals($temperature, $result);
@@ -86,9 +86,9 @@ class UnitsTest extends \PHPUnit_Framework_TestCase
      */
     public function testSetGetDistance($temperature, $distance, $pressure, $speed)
     {
-        $condition = new Units($temperature, $distance, $pressure, $speed);
+        $units = new Units($temperature, $distance, $pressure, $speed);
 
-        $result = $condition->getDistance();
+        $result = $units->getDistance();
 
         $this->assertInternalType('string', $result);
         $this->assertEquals($distance, $result);
@@ -108,9 +108,9 @@ class UnitsTest extends \PHPUnit_Framework_TestCase
      */
     public function testSetGetPressure($temperature, $distance, $pressure, $speed)
     {
-        $condition = new Units($temperature, $distance, $pressure, $speed);
+        $units = new Units($temperature, $distance, $pressure, $speed);
 
-        $result = $condition->getPressure();
+        $result = $units->getPressure();
 
         $this->assertInternalType('string', $result);
         $this->assertEquals($pressure, $result);
@@ -130,9 +130,9 @@ class UnitsTest extends \PHPUnit_Framework_TestCase
      */
     public function testSetGetSpeed($temperature, $distance, $pressure, $speed)
     {
-        $condition = new Units($temperature, $distance, $pressure, $speed);
+        $units = new Units($temperature, $distance, $pressure, $speed);
 
-        $result = $condition->getSpeed();
+        $result = $units->getSpeed();
 
         $this->assertInternalType('string', $result);
         $this->assertEquals($speed, $result);

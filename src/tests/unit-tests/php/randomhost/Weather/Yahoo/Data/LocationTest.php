@@ -58,9 +58,9 @@ class LocationTest extends \PHPUnit_Framework_TestCase
      */
     public function testSetGetCity($city, $region, $country)
     {
-        $condition = new Location($city, $region, $country);
+        $location = new Location($city, $region, $country);
 
-        $result = $condition->getCity();
+        $result = $location->getCity();
 
         $this->assertInternalType('string', $result);
         $this->assertEquals($city, $result);
@@ -79,9 +79,9 @@ class LocationTest extends \PHPUnit_Framework_TestCase
      */
     public function testSetGetRegion($city, $region, $country)
     {
-        $condition = new Location($city, $region, $country);
+        $location = new Location($city, $region, $country);
 
-        $result = $condition->getRegion();
+        $result = $location->getRegion();
 
         $this->assertInternalType('string', $result);
         $this->assertEquals($region, $result);
@@ -100,9 +100,9 @@ class LocationTest extends \PHPUnit_Framework_TestCase
      */
     public function testSetGetCountry($city, $region, $country)
     {
-        $condition = new Location($city, $region, $country);
+        $location = new Location($city, $region, $country);
 
-        $result = $condition->getCountry();
+        $result = $location->getCountry();
 
         $this->assertInternalType('string', $result);
         $this->assertEquals($country, $result);
