@@ -68,8 +68,7 @@ class UnitsTest extends \PHPUnit_Framework_TestCase
 
         $result = $units->getTemperature();
 
-        $this->assertInternalType('string', $result);
-        $this->assertEquals($temperature, $result);
+        $this->assertSame($temperature, $result);
     }
 
     /**
@@ -90,8 +89,7 @@ class UnitsTest extends \PHPUnit_Framework_TestCase
 
         $result = $units->getDistance();
 
-        $this->assertInternalType('string', $result);
-        $this->assertEquals($distance, $result);
+        $this->assertSame($distance, $result);
     }
 
     /**
@@ -112,8 +110,7 @@ class UnitsTest extends \PHPUnit_Framework_TestCase
 
         $result = $units->getPressure();
 
-        $this->assertInternalType('string', $result);
-        $this->assertEquals($pressure, $result);
+        $this->assertSame($pressure, $result);
     }
 
     /**
@@ -134,7 +131,6 @@ class UnitsTest extends \PHPUnit_Framework_TestCase
 
         $result = $units->getSpeed();
 
-        $this->assertInternalType('string', $result);
-        $this->assertEquals($speed, $result);
+        $this->assertSame($speed, $result);
     }
 }

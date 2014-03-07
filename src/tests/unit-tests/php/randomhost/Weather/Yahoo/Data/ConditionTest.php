@@ -68,8 +68,7 @@ class ConditionTest extends \PHPUnit_Framework_TestCase
 
         $result = $condition->getText();
 
-        $this->assertInternalType('string', $result);
-        $this->assertEquals($text, $result);
+        $this->assertSame($text, $result);
     }
 
     /**
@@ -96,8 +95,7 @@ class ConditionTest extends \PHPUnit_Framework_TestCase
 
         $result = $condition->getCode();
 
-        $this->assertInternalType('int', $result);
-        $this->assertEquals($code, $result);
+        $this->assertSame($code, $result);
     }
 
     /**
@@ -153,6 +151,6 @@ class ConditionTest extends \PHPUnit_Framework_TestCase
         $result = $condition->getDate();
 
         $this->assertInstanceOf('\DateTime', $result);
-        $this->assertEquals($date, $result->format('D, d M Y g:i a T'));
+        $this->assertSame($date, $result->format('D, d M Y g:i a T'));
     }
 }

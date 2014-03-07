@@ -62,8 +62,7 @@ class LocationTest extends \PHPUnit_Framework_TestCase
 
         $result = $location->getCity();
 
-        $this->assertInternalType('string', $result);
-        $this->assertEquals($city, $result);
+        $this->assertSame($city, $result);
     }
 
     /**
@@ -83,8 +82,7 @@ class LocationTest extends \PHPUnit_Framework_TestCase
 
         $result = $location->getRegion();
 
-        $this->assertInternalType('string', $result);
-        $this->assertEquals($region, $result);
+        $this->assertSame($region, $result);
     }
 
     /**
@@ -104,7 +102,6 @@ class LocationTest extends \PHPUnit_Framework_TestCase
 
         $result = $location->getCountry();
 
-        $this->assertInternalType('string', $result);
-        $this->assertEquals($country, $result);
+        $this->assertSame($country, $result);
     }
 }

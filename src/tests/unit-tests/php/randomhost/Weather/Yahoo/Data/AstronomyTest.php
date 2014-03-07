@@ -42,7 +42,7 @@ class AstronomyTest extends \PHPUnit_Framework_TestCase
         $result = $astronomy->getSunrise();
 
         $this->assertInstanceOf('\DateTime', $result);
-        $this->assertEquals($sunrise, $result->format('g:i a'));
+        $this->assertSame($sunrise, $result->format('g:i a'));
     }
 
     /**
@@ -59,6 +59,6 @@ class AstronomyTest extends \PHPUnit_Framework_TestCase
         $result = $astronomy->getSunset();
 
         $this->assertInstanceOf('\DateTime', $result);
-        $this->assertEquals($sunset, $result->format('g:i a'));
+        $this->assertSame($sunset, $result->format('g:i a'));
     }
 }
