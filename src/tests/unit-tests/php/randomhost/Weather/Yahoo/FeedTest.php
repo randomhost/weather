@@ -428,6 +428,34 @@ class FeedTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
+     * Tests Feed::getForecast()
+     *
+     * @return void
+     */
+    public function testGetForecast()
+    {
+        $feed = new Feed();
+        $this->assertInstanceOf(__NAMESPACE__ . '\Feed', $feed);
+
+        $forecast = $feed->getForecast();
+        $this->assertInternalType('array', $forecast);
+        $this->assertEmpty($forecast);
+
+        $feed->setLocationId(667931);
+        $feed->setFeedUrl($this->getTestFeedPath(self::TEST_FEED_VALID));
+        $feed->fetchData();
+
+        $forecast = $feed->getForecast();
+        $this->assertInternalType('array', $forecast);
+        foreach ($forecast as $object) {
+            $this->assertInstanceOf(
+                __NAMESPACE__ . '\Data\Forecast',
+                $object
+            );
+        }
+    }
+
+    /**
      * Returns the path to the given test feed.
      *
      * @param string $feedName Test feed name.
