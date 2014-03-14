@@ -134,6 +134,13 @@ class Feed
     protected $condition = null;
 
     /**
+     * Array of forecast object instances
+     *
+     * @var Data\Forecast[]|array
+     */
+    protected $forecast = array();
+
+    /**
      * Constructor.
      *
      * If a $locationId is given, $this::fetchData() will be called implicitly.
@@ -180,6 +187,7 @@ class Feed
             $this->atmosphere = $this->createObjectFromData('atmosphere');
             $this->astronomy = $this->createObjectFromData('astronomy');
             $this->condition = $this->createObjectFromData('condition', 'item');
+            $this->forecast = $this->createForecastObjects();
         } catch (\Exception $e) {
             throw new \RuntimeException($e->getMessage(), $e->getCode(), $e);
         }
@@ -327,6 +335,17 @@ class Feed
     }
 
     /**
+     * Returns an array of Data\Forecast objects holding the weather forecast
+     * for a specific day.
+     *
+     * @return Data\Forecast[]|array
+     */
+    public function getForecast()
+    {
+        return $this->forecast;
+    }
+
+    /**
      * Retrieves the XML from the Yahoo Weather API.
      *
      * @return \SimpleXMLElement
@@ -356,16 +375,16 @@ class Feed
     }
 
     /**
-     * Returns the requested data element from the Yahoo weather namespace.
+     * Returns the requested data elements from the Yahoo weather namespace.
      *
      * @param string $key     Key of the data to be retrieved.
      * @param string $subPath Optional: Sub path to search the element in.
      *
-     * @return array Associative array of feed data.
+     * @return array Array of \SimpleXMLElement instances.
      * @throws \InvalidArgumentException Thrown if $key is not a valid element
      *                                   in the namespace.
      */
-    protected function getDataFromNamespace($key, $subPath = '')
+    protected function getElementsFromNamespace($key, $subPath = '')
     {
         $result = @$this->xml->xpath(
             sprintf(
@@ -383,8 +402,7 @@ class Feed
                 )
             );
         }
-        $xml = array_pop($result);
-        if (!$xml instanceof \SimpleXMLElement) {
+        if (count($result) == 0) {
             throw new \InvalidArgumentException(
                 sprintf(
                     'Element "%s" not found in namespace "%s"',
@@ -393,7 +411,8 @@ class Feed
                 )
             );
         }
-        return current($xml->attributes());
+
+        return $result;
     }
 
     /**
@@ -410,10 +429,45 @@ class Feed
      */
     protected function createObjectFromData($key, $subPath = '')
     {
-        $data = $this->getDataFromNamespace($key, $subPath);
+        $array = $this->getElementsFromNamespace($key, $subPath);
+        $xml = array_pop($array);
+        $data = current($xml->attributes());
+
         $class = new \ReflectionClass(
             __NAMESPACE__ . '\\Data\\' . ucfirst($key)
         );
         return $class->newInstanceArgs($data);
+    }
+
+    /**
+     * Returns an array of Forecast objects.
+     *
+     * @return array
+     * @throws \InvalidArgumentException Thrown if forecast data is missing in
+     *                                   the feed.
+     * @throws \ReflectionException      Thrown if no objects could be created
+     *                                   from the returned data.
+     */
+    protected function createForecastObjects()
+    {
+        $array = $this->getElementsFromNamespace('forecast', 'item');
+
+        $class = new \ReflectionClass(
+            __NAMESPACE__ . '\\Data\\Forecast'
+        );
+
+        $forecasts = array();
+        /**
+         * @var $forecast \SimpleXMLElement
+         */
+        foreach ($array as $forecast) {
+            $data = current($forecast->attributes());
+            if (array_key_exists('day', $data)) {
+                unset($data['day']);
+            }
+            $forecasts[] = $class->newInstanceArgs($data);
+        }
+
+        return $forecasts;
     }
 } 
