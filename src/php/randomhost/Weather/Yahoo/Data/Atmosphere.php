@@ -97,9 +97,7 @@ class Atmosphere
     }
 
     /**
-     * Returns the state of the barometric pressure.
-     *
-     * steady (0), rising (1), or falling (2). (integer: 0, 1, 2)
+     * Returns the barometric pressure.
      *
      * @return float
      */
@@ -109,7 +107,9 @@ class Atmosphere
     }
 
     /**
-     * Returns the rising.
+     * Returns the state of the barometric pressure.
+     *
+     * steady (0), rising (1), or falling (2). (integer: 0, 1, 2).
      *
      * @return int
      */
