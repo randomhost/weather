@@ -1,3 +1,5 @@
+[![Build Status](https://travis-ci.org/Random-Host/PHP_Weather.svg)](https://travis-ci.org/Random-Host/PHP_Weather)
+
 PHP_Weather
 ===========
 
