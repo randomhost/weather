@@ -1,0 +1,50 @@
+{
+    "query": {
+        "count": 1,
+        "created": "2016-09-18T23:13:04Z",
+        "lang": "en-US",
+        "results": {
+            "channel": {
+                "units": {
+                    "distance": "km",
+                    "pressure": "mb",
+                    "speed": "km/h",
+                    "temperature": "C"
+                },
+                "title": "Yahoo! Weather - Cologne, NW, DE",
+                "link": "http://us.rd.yahoo.com/dailynews/rss/weather/Country__Country/*https://weather.yahoo.com/country/state/city-667931/",
+                "description": "Yahoo! Weather for Cologne, NW, DE",
+                "language": "en-us",
+                "lastBuildDate": "Mon, 19 Sep 2016 01:13 AM CEST",
+                "ttl": "60",
+                "location": {
+                    "city": "Cologne",
+                    "country": "Germany",
+                    "region": " NW"
+                },
+                "wind": {
+                    "chill": "61",
+                    "direction": "335",
+                    "speed": "11.27"
+                },
+                "atmosphere": {
+                    "humidity": "84",
+                    "pressure": "34168.68",
+                    "rising": "0",
+                    "visibility": "25.91"
+                },
+                "astronomy": {
+                    "sunrise": "7:16 am",
+                    "sunset": "7:34 pm"
+                },
+                "image": {
+                    "title": "Yahoo! Weather",
+                    "width": "142",
+                    "height": "18",
+                    "link": "http://weather.yahoo.com",
+                    "url": "http://l.yimg.com/a/i/brand/purplelogo//uh/us/news-wea.gif"
+                }
+            }
+        }
+    }
+}

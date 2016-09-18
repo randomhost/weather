@@ -1,25 +1,14 @@
-[![Build Status](https://travis-ci.org/Random-Host/PHP_Weather.svg)](https://travis-ci.org/Random-Host/PHP_Weather)
+[![Build Status][0]][1]
 
-PHP_Weather
-===========
+randomhost/weather
+==================
 
-This package encapsulates SimpleXML functions for easy retrieval of weather data
-from the [Yahoo Weather API](http://developer.yahoo.com/weather/). It
-was created as part of the PHP_Webcam_Overlay package but is released as a
-separate component so it can be used in other packages.
+This package encapsulates functions for easy retrieval of weather data from the
+[Yahoo Weather API][2]. It was created as part of `randomhost/webcamoverlay`
+but is released as a separate component so it can be used in other packages.
 
-Because it was created as a dependency of the PHP_Webcam_Overlay package, it
-does only support a subset of the available weather data.
-
-System-Wide Installation
-------------------------
-
-PHP_Weather should be installed using the [PEAR Installer](http://pear.php.net).
-This installer is the PHP community's de-facto standard for installing PHP
-components.
-
-    sudo pear channel-discover pear.random-host.com
-    sudo pear install --alldeps randomhost/PHP_Weather
+Because it was created as a dependency of `randomhost/webcamoverlay`, it does
+only support a subset of the available weather data.
 
 Usage
 -----
@@ -30,10 +19,10 @@ A basic approach at using this package could look like this:
 <?php
 namespace randomhost\Weather;
 
-require 'psr0.autoloader.php';
+require_once '/path/to/vendor/autoload.php';
 
 // get Yahoo Weather API Feed instance
-$feed = new Yahoo\Feed(667931, Yahoo\Feed::UNITS_INTL);
+$feed = new Yahoo\Feed('Cologne', Yahoo\Feed::UNITS_INTL);
 
 echo sprintf(
     'Temperature: %s°%s, Humidity: %s%%',
@@ -61,8 +50,8 @@ It provides all methods required for retrieving data from the Yahoo! Weather API
 
 The constructor takes 3 parameters which are all optional:
 
-- `$locationId`  
-Location ID (WOEID) for retrieving weather data from the Yahoo Weather API.
+- `$locationName`  
+Location name for retrieving weather data from the Yahoo Weather API.
 
 - `$systemOfUnits`  
 System of units to be returned by the feed. This must be either `Feed::UNITS_INTL`
@@ -71,11 +60,11 @@ or `Feed::UNITS_US`.
 - `$feedUrl`  
 Feed URL for retrieving weather data from Yahoo Weather API.
 
-If a `$locationId` is given, `Feed::fetchData()` will be called implicitly which
-will automatically retrieve weather data for the given location ID and populate
-the data access objects accordingly.  
-If you do not want this, you can omit `$locationId` or set it to `0` and configure
-the location ID yourself using `Feed::setLocationId()`.
+If a `$locationName` is given, `Feed::fetchData()` will be called implicitly
+which will automatically retrieve weather data for the given location ID and
+populate the data access objects accordingly.  
+If you do not want this, you can omit `$locationName` or set it to `` (empty
+string) and configure the location name yourself using `Feed::setLocationName()`.
 
 The `$systemOfUnits` parameter can be used to determine the system of units to
 be used by the weather feed. If not given or set to `''` (an empty string), it
@@ -95,11 +84,11 @@ Sets the feed URL for retrieving weather data from the Yahoo! Weather API.
 - `getFeedUrl()`  
 Returns the last set weather API feed URL.
 
-- `setLocationId($id)`  
-Sets the location ID (WOEID) for retrieving weather data from Yahoo Weather API.
+- `setLocationName($name)`  
+Sets the location name for retrieving weather data from Yahoo Weather API.
 
-- `getLocationId()`  
-Returns the last set location ID for retrieving weather data.
+- `getLocationName()`  
+Returns the last set location name for retrieving weather data.
 
 - `setSystemOfUnits($systemOfUnits)`  
 Sets the system of units to be returned by the feed.
@@ -114,8 +103,8 @@ The following public methods for retrieving data from the feed are available:
 - `fetchData()`  
 Fetches weather data from the Yahoo Weather API and populates the data access
 objects accordingly.  
-This method must be called at least once before using any
-of the methods listed below.
+This method must be called at least once before using any of the methods listed
+below.
 
 - `getLocation()`  
 Returns a `Data\Location` object holding the location of this forecast.
@@ -206,7 +195,8 @@ Returns the visibility. (float)
 Returns the barometric pressure. (float)
 
 - `getRising()`  
-Returns the state of the barometric pressure: steady (0), rising (1), or falling (2). (int)  
+Returns the state of the barometric pressure: steady (0), rising (1),
+or falling (2). (int)  
 
 ### The Data\Astronomy object
 
@@ -233,8 +223,7 @@ Returns the textual description of conditions. (string)
 - `getCode()`  
 Returns the condition code for this forecast. You could use this code to choose
 a text description or image for the forecast.  
-The possible values for this element are described in
-[Condition Codes](http://developer.yahoo.com/weather/#codes). (int)
+The possible values for this element are described in [Condition Codes][3]. (int)
 
 - `getTemperature()`  
 Returns the current temperature. (float)
@@ -263,75 +252,15 @@ Returns the textual description of conditions. (string)
 - `getCode()`  
 Returns the condition code for this forecast. You could use this code to choose
 a text description or image for the forecast.  
-The possible values for this element are described in
-[Condition Codes](http://developer.yahoo.com/weather/#codes). (int)
-
-Finding your WOEID
-------------------
-
-To find your WOEID, browse or search for your city from the [Yahoo! Weather home page]
-(http://weather.yahoo.com/). The WOEID is in the URL for the forecast page for
-that city. You can also get the WOEID by entering your zip code on the home page.
-
-For example, if you search for *Cologne* on the Weather home page, the forecast page
-for that city is:
-
-    http://weather.yahoo.com/germany/north-rhine-westphalia/cologne-667931/
-
-The WOEID is 667931.
-
-As A Dependency On Your Component
----------------------------------
-
-If you are creating a component that relies on PHP_Weather, please make sure that
-you add PHP_Weather to your component's package.xml file:
-
-```xml
-<dependencies>
-  <required>
-    <package>
-      <name>PHP_Weather</name>
-      <channel>pear.random-host.com</channel>
-      <min>1.0.0</min>
-      <max>1.999.9999</max>
-    </package>
-  </required>
-</dependencies>
-```
-
-Development Environment
------------------------
-
-If you want to patch or enhance this component, you will need to create a
-suitable development environment. The easiest way to do that is to install
-phix4componentdev:
-
-    # phix4componentdev
-    sudo apt-get install php5-xdebug
-    sudo apt-get install php5-imagick
-    sudo pear channel-discover pear.phix-project.org
-    sudo pear -D auto_discover=1 install -Ba phix/phix4componentdev
-
-You can then clone the git repository:
-
-    # PHP_Weather
-    git clone https://github.com/Random-Host/PHP_Weather.git
-
-Then, install a local copy of this component's dependencies to complete the
-development environment:
-
-    # build vendor/ folder
-    phing build-vendor
-
-To make life easier for you, common tasks (such as running unit tests,
-generating code review analytics, and creating the PEAR package) have been
-automated using [phing](http://phing.info).  You'll find the automated steps
-inside the build.xml file that ships with the component.
-
-Run the command 'phing' in the component's top-level folder to see the full list
-of available automated tasks.
+The possible values for this element are described in [Condition Codes][3]. (int)
 
 License
 -------
 
 See LICENSE.txt for full license details.
+
+
+[0]: https://travis-ci.org/randomhost/weather.svg?branch=master
+[1]: https://travis-ci.org/randomhost/weather
+[2]: http://developer.yahoo.com/weather/
+[3]: https://developer.yahoo.com/weather/documentation.html#codes
