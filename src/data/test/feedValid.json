@@ -1,0 +1,149 @@
+{
+    "query": {
+        "count": 1,
+        "created": "2016-09-18T23:13:04Z",
+        "lang": "en-US",
+        "results": {
+            "channel": {
+                "units": {
+                    "distance": "km",
+                    "pressure": "mb",
+                    "speed": "km/h",
+                    "temperature": "C"
+                },
+                "title": "Yahoo! Weather - Cologne, NW, DE",
+                "link": "http://us.rd.yahoo.com/dailynews/rss/weather/Country__Country/*https://weather.yahoo.com/country/state/city-667931/",
+                "description": "Yahoo! Weather for Cologne, NW, DE",
+                "language": "en-us",
+                "lastBuildDate": "Mon, 19 Sep 2016 01:13 AM CEST",
+                "ttl": "60",
+                "location": {
+                    "city": "Cologne",
+                    "country": "Germany",
+                    "region": " NW"
+                },
+                "wind": {
+                    "chill": "61",
+                    "direction": "335",
+                    "speed": "11.27"
+                },
+                "atmosphere": {
+                    "humidity": "84",
+                    "pressure": "34168.68",
+                    "rising": "0",
+                    "visibility": "25.91"
+                },
+                "astronomy": {
+                    "sunrise": "7:16 am",
+                    "sunset": "7:34 pm"
+                },
+                "image": {
+                    "title": "Yahoo! Weather",
+                    "width": "142",
+                    "height": "18",
+                    "link": "http://weather.yahoo.com",
+                    "url": "http://l.yimg.com/a/i/brand/purplelogo//uh/us/news-wea.gif"
+                },
+                "item": {
+                    "title": "Conditions for Cologne, NW, DE at 12:00 AM CEST",
+                    "lat": "50.941662",
+                    "long": "6.95518",
+                    "link": "http://us.rd.yahoo.com/dailynews/rss/weather/Country__Country/*https://weather.yahoo.com/country/state/city-667931/",
+                    "pubDate": "Mon, 19 Sep 2016 12:00 AM CEST",
+                    "condition": {
+                        "code": "26",
+                        "date": "Mon, 19 Sep 2016 12:00 AM CEST",
+                        "temp": "16",
+                        "text": "Cloudy"
+                    },
+                    "forecast": [
+                        {
+                            "code": "28",
+                            "date": "19 Sep 2016",
+                            "day": "Mon",
+                            "high": "20",
+                            "low": "12",
+                            "text": "Mostly Cloudy"
+                        },
+                        {
+                            "code": "28",
+                            "date": "20 Sep 2016",
+                            "day": "Tue",
+                            "high": "20",
+                            "low": "11",
+                            "text": "Mostly Cloudy"
+                        },
+                        {
+                            "code": "30",
+                            "date": "21 Sep 2016",
+                            "day": "Wed",
+                            "high": "22",
+                            "low": "10",
+                            "text": "Partly Cloudy"
+                        },
+                        {
+                            "code": "30",
+                            "date": "22 Sep 2016",
+                            "day": "Thu",
+                            "high": "21",
+                            "low": "10",
+                            "text": "Partly Cloudy"
+                        },
+                        {
+                            "code": "30",
+                            "date": "23 Sep 2016",
+                            "day": "Fri",
+                            "high": "20",
+                            "low": "10",
+                            "text": "Partly Cloudy"
+                        },
+                        {
+                            "code": "30",
+                            "date": "24 Sep 2016",
+                            "day": "Sat",
+                            "high": "20",
+                            "low": "8",
+                            "text": "Partly Cloudy"
+                        },
+                        {
+                            "code": "28",
+                            "date": "25 Sep 2016",
+                            "day": "Sun",
+                            "high": "22",
+                            "low": "8",
+                            "text": "Mostly Cloudy"
+                        },
+                        {
+                            "code": "30",
+                            "date": "26 Sep 2016",
+                            "day": "Mon",
+                            "high": "22",
+                            "low": "9",
+                            "text": "Partly Cloudy"
+                        },
+                        {
+                            "code": "30",
+                            "date": "27 Sep 2016",
+                            "day": "Tue",
+                            "high": "21",
+                            "low": "11",
+                            "text": "Partly Cloudy"
+                        },
+                        {
+                            "code": "30",
+                            "date": "28 Sep 2016",
+                            "day": "Wed",
+                            "high": "22",
+                            "low": "11",
+                            "text": "Partly Cloudy"
+                        }
+                    ],
+                    "description": "<![CDATA[<img src=\"http://l.yimg.com/a/i/us/we/52/26.gif\"/>\n<BR />\n<b>Current Conditions:</b>\n<BR />Cloudy\n<BR />\n<BR />\n<b>Forecast:</b>\n<BR /> Mon - Mostly Cloudy. High: 20Low: 12\n<BR /> Tue - Mostly Cloudy. High: 20Low: 11\n<BR /> Wed - Partly Cloudy. High: 22Low: 10\n<BR /> Thu - Partly Cloudy. High: 21Low: 10\n<BR /> Fri - Partly Cloudy. High: 20Low: 10\n<BR />\n<BR />\n<a href=\"http://us.rd.yahoo.com/dailynews/rss/weather/Country__Country/*https://weather.yahoo.com/country/state/city-667931/\">Full Forecast at Yahoo! Weather</a>\n<BR />\n<BR />\n(provided by <a href=\"http://www.weather.com\" >The Weather Channel</a>)\n<BR />\n]]>",
+                    "guid": {
+                        "isPermaLink": "false"
+                    }
+                }
+            }
+        }
+    }
+}
