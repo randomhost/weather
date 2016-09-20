@@ -38,8 +38,7 @@ temperature and humidity.
 Assuming that you named this file `weather.php`, you should now be able to
 access the weather data at `http://example.com/weather.php`
 
-A more detailed example can be found in `src/www/weather/index.php` which will
-also be installed to your PEAR www directory (usually `/usr/share/php/htdocs`).
+A more detailed example can be found in `src/www/weather/index.php`.
 
 ### The Feed object
 
@@ -63,7 +62,7 @@ Feed URL for retrieving weather data from Yahoo Weather API.
 If a `$locationName` is given, `Feed::fetchData()` will be called implicitly
 which will automatically retrieve weather data for the given location ID and
 populate the data access objects accordingly.  
-If you do not want this, you can omit `$locationName` or set it to `` (empty
+If you do not want this, you can omit `$locationName` or set it to `''` (an empty
 string) and configure the location name yourself using `Feed::setLocationName()`.
 
 The `$systemOfUnits` parameter can be used to determine the system of units to
