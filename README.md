@@ -38,7 +38,7 @@ temperature and humidity.
 Assuming that you named this file `weather.php`, you should now be able to
 access the weather data at `http://example.com/weather.php`
 
-A more detailed example can be found in `src/www/weather/index.php`.
+A more detailed example can be found in `src/www/weather.php`.
 
 ### The Feed object
 
