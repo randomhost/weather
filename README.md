@@ -129,6 +129,12 @@ Returns a `Data\Condition` object holding the current weather conditions.
 Returns an array of `Data\Forecast` objects holding the weather forecast for a
 specific day.
 
+- `getTitle()`  
+Returns the title for the weather data as returned by Yahoo.
+
+- `getLink()`  
+Returns the link for linking weather data back to Yahoo.
+
 ### The Data\Location object
 
 The `Data\Location` object represents location information of the forecast.
@@ -253,6 +259,13 @@ Returns the condition code for this forecast. You could use this code to choose
 a text description or image for the forecast.  
 The possible values for this element are described in [Condition Codes][3]. (int)
 
+Attribution Guidelines
+----------------------
+
+Please note that you are required to link back to Yahoo using the link URL
+provided by `Feed::getLink()` and one of the logos Yahoo provides. Please refer
+to Yahoo's [Attribution Guidelines for Yahoo APIs][4] for details.
+
 License
 -------
 
@@ -263,3 +276,4 @@ See LICENSE.txt for full license details.
 [1]: https://travis-ci.org/randomhost/weather
 [2]: http://developer.yahoo.com/weather/
 [3]: https://developer.yahoo.com/weather/documentation.html#codes
+[4]: https://developer.yahoo.com/attribution/

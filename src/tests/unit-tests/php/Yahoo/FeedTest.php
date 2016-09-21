@@ -449,6 +449,55 @@ class FeedTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
+     * Tests Feed::getTitle().
+     */
+    public function testGetTitle()
+    {
+        $feed = $this->getFeedMock();
+        $this->assertInstanceOf(__NAMESPACE__ . '\Feed', $feed);
+
+        $title = $feed->getTitle();
+        $this->assertInternalType('string', $title);
+        $this->assertEmpty($title);
+
+        $feed->setLocationName('Cologne');
+        $feed->setFeedUrl($this->getTestFeedPath(self::TEST_FEED_VALID));
+        $feed->fetchData();
+
+        $title = $feed->getTitle();
+        $this->assertInternalType('string', $title);
+        $this->assertEquals(
+            'Yahoo! Weather - Cologne, NW, DE',
+            $title
+        );
+    }
+
+    /**
+     * Tests Feed::getLink().
+     */
+    public function testGetLink()
+    {
+        $feed = $this->getFeedMock();
+        $this->assertInstanceOf(__NAMESPACE__ . '\Feed', $feed);
+
+        $link = $feed->getLink();
+        $this->assertInternalType('string', $link);
+        $this->assertEmpty($link);
+
+        $feed->setLocationName('Cologne');
+        $feed->setFeedUrl($this->getTestFeedPath(self::TEST_FEED_VALID));
+        $feed->fetchData();
+
+        $link = $feed->getLink();
+        $this->assertInternalType('string', $link);
+        $this->assertEquals(
+            'http://us.rd.yahoo.com/dailynews/rss/weather/Country__Country/*' .
+            'https://weather.yahoo.com/country/state/city-667931/',
+            $link
+        );
+    }
+
+    /**
      * Returns a mocked Feed instance.
      *
      * @param string $locationName  Optional: Location name.

@@ -25,7 +25,8 @@ class Condition
      *
      * You could use this code to choose a text description or image for the
      * forecast. The possible values for this element are described in
-     * <a href="http://developer.yahoo.com/weather/#codes">Condition Codes</a>.
+     * <a href="https://developer.yahoo.com/weather/documentation.html#codes">
+     * Condition Codes</a>.
      *
      * @var int
      */
@@ -68,7 +69,8 @@ class Condition
      *
      * You could use this code to choose a text description or image for the
      * forecast. The possible values for this element are described in
-     * <a href="http://developer.yahoo.com/weather/#codes">Condition Codes</a>.
+     * <a href="https://developer.yahoo.com/weather/documentation.html#codes">
+     * Condition Codes</a>.
      *
      * @return int
      */
