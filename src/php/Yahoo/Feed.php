@@ -115,6 +115,20 @@ class Feed
     protected $forecast = array();
 
     /**
+     * Weather data title.
+     *
+     * @var string
+     */
+    protected $title = '';
+
+    /**
+     * Weather data link.
+     *
+     * @var string
+     */
+    protected $link = '';
+
+    /**
      * Constructor.
      *
      * If a $locationName is given, $this::fetchData() will be called implicitly.
@@ -164,6 +178,8 @@ class Feed
             $this->astronomy = $this->createObjectFromData('astronomy');
             $this->condition = $this->createObjectFromData('condition', 'item');
             $this->forecast = $this->createForecastObjects();
+            $this->title = $this->getElementsFromArray('title');
+            $this->link = $this->getElementsFromArray('link');
         } catch (\Exception $e) {
             throw new \RuntimeException($e->getMessage(), $e->getCode(), $e);
         }
@@ -319,6 +335,26 @@ class Feed
     public function getForecast()
     {
         return $this->forecast;
+    }
+
+    /**
+     * Returns the title of the weather data.
+     *
+     * @return string
+     */
+    public function getTitle()
+    {
+        return $this->title;
+    }
+
+    /**
+     * Returns the link of the weather data.
+     *
+     * @return string
+     */
+    public function getLink()
+    {
+        return $this->link;
     }
 
     /**
