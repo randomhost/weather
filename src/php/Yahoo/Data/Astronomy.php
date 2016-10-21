@@ -1,6 +1,8 @@
 <?php
 namespace randomhost\Weather\Yahoo\Data;
 
+use DateTime;
+
 /**
  * Represents forecast information about current astronomical conditions
  *
@@ -14,14 +16,14 @@ class Astronomy
     /**
      * Today's sunrise time.
      *
-     * @var \DateTime
+     * @var DateTime
      */
     protected $sunrise = null;
 
     /**
      * Today's sunset time.
      *
-     * @var \DateTime
+     * @var DateTime
      */
     protected $sunset = null;
 
@@ -40,7 +42,7 @@ class Astronomy
     /**
      * Returns today's sunrise time.
      *
-     * @return \DateTime
+     * @return DateTime
      */
     public function getSunrise()
     {
@@ -50,7 +52,7 @@ class Astronomy
     /**
      * Returns today's sunset time.
      *
-     * @return \DateTime
+     * @return DateTime
      */
     public function getSunset()
     {
@@ -66,7 +68,7 @@ class Astronomy
      */
     protected function setSunrise($sunrise)
     {
-        $this->sunrise = new \DateTime($sunrise);
+        $this->sunrise = DateTime::createFromFormat('H:i A', $sunrise);
 
         return $this;
     }
@@ -80,7 +82,7 @@ class Astronomy
      */
     protected function setSunset($sunset)
     {
-        $this->sunset = new \DateTime($sunset);
+        $this->sunset = DateTime::createFromFormat('H:i A', $sunset);
 
         return $this;
     }

@@ -169,6 +169,8 @@ class Feed
     {
         $this->jsonData = $this->loadFeed();
 
+        $this->fixBrokenData();
+
         // turn namespace data into objects
         try {
             $this->location = $this->createObjectFromData('location');
@@ -523,5 +525,66 @@ class Feed
         );
 
         return '?' . http_build_query($params);
+    }
+
+    /**
+     * Fixes broken data in Yahoo's JSON response.
+     *
+     * The Yahoo Weather API is not as reliable as we'd like so some of the data
+     * it returns tends to be horribly off or otherwise broken.
+     *
+     * This method will attempt to fix such data where possible.
+     *
+     * For now, it only fixes the broken "astronomy" time format.
+     *
+     * NOTE: "atmosphere" data is known to be horribly broken in terms of
+     * "pressure" values but since those do not break this package (unlike the
+     * broken time format), we won't attempt to fix that here. We just pass on
+     * data. If you need to "fix" Yahoo's broken data, you'll have to do it in
+     * your own code.
+     *
+     * @return $this
+     */
+    protected function fixBrokenData()
+    {
+        if (isset($this->jsonData['astronomy']['sunrise'])) {
+            $this->jsonData['astronomy']['sunrise'] = $this->fixBrokenTime(
+                $this->jsonData['astronomy']['sunrise']
+            );
+        }
+
+        if (isset($this->jsonData['astronomy']['sunset'])) {
+            $this->jsonData['astronomy']['sunset'] = $this->fixBrokenTime(
+                $this->jsonData['astronomy']['sunset']
+            );
+        }
+
+        return $this;
+    }
+
+    /**
+     * Takes Yahoo's broken time format and returns a proper time string.
+     *
+     * @param string $time Broken time string.
+     *
+     * @return string
+     */
+    protected function fixBrokenTime($time)
+    {
+        $result = preg_match(
+            '#([0-9]+):([0-9]*) (am|pm)#',
+            $time,
+            $timeComponents
+        );
+        if (1 !== $result) {
+            return '0:00 am';
+        }
+
+        return sprintf(
+            "%u:%'.02u %s",
+            $timeComponents[1],
+            $timeComponents[2],
+            $timeComponents[3]
+        );
     }
 }
