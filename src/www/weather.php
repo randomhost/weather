@@ -21,6 +21,6 @@ var_dump($feed->getLocation());
 var_dump($feed->getUnits());
 var_dump($feed->getWind());
 var_dump($feed->getAtmosphere());
-var_dump($feed->getAstronomy()->getSunrise());
+var_dump($feed->getAstronomy());
 var_dump($feed->getCondition());
 var_dump($feed->getForecast());
