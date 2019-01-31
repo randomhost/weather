@@ -1,5 +1,7 @@
 [![Build Status][0]][1]
 
+**NOTE: This package has been abandoned as of January 2019 due to Yahoo shutting down free access to their Weather API.**
+
 randomhost/weather
 ==================
 
